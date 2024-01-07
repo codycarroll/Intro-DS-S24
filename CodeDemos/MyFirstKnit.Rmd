@@ -1,0 +1,36 @@
+---
+title: "HW1"
+author: "Cody Carroll"
+date: "Fall 2023"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+# Question 1 
+a.  I'm interested in applying R and DS to my field which is psychology. 
+b. $y = 2\pi t$ 
+c. In this next chunk I am going to use the function `print()`
+
+
+```{r, eval = TRUE, echo = TRUE}
+print("Hello World")
+```
+
+The options  `eval = TRUE` and `echo = TRUE` tell the .Rmd doc to run the code chunk and print the output in the .Rmd file. 
+
+
+Next, I'll do the same as above except I will tell R **not** to print out my input:
+```{r, echo = FALSE, eval = TRUE}
+print("Hello World")
+```
+
+Next let's generate 1000 observations from a N(0,1) distribution and print the histogram of the data with 100 bins.
+
+```{r, echo = TRUE, eval = TRUE}
+data <- rnorm(n = 1000, mean = 0, sd = 1)
+hist(data, n = 100)
+```
+
+Finally, to convert this entire .Rmd doc to a .pdf or .html file, click "Knit>Knit to pdf" or "Knit>Knit to html" at the top of the source file window.
