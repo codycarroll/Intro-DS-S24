@@ -108,13 +108,15 @@ Overall, this course will be split into two main parts: (1) learning the basics 
 
 ### Important Dates
 
-- Monday, August 28th - Last day to add the class
-- Friday, September 8th - Census date. Last day to withdraw with tuition reversal
-- Tuesday, October 17th - Fall break! (**no class**)
-- Friday, November 3rd - Last day to withdraw
-- Thursday, November 23rd - Thanksgiving Holiday (**no class**)
-- Tuesday, December 5th - Last day of class
-- Thursday, December 7th - Review day
+- Tuesday, Jan 23rd - First day of class
+- Friday, Jan 26th - Last day to add the class
+- Friday, Feb 9th - Census date. Last day to withdraw with tuition reversal
+- Tuesday & Thursday, March 12th & 14th - Spring break! (**no class**)
+- Thursday, April 4th - Remote class - online lecture
+- Monday, Apr 8th - Last day to withdraw
+- Tuesday, Apr 9th - Final Project Workday - Meet with your teammates! (**No lecture.**)
+- Tuesday,  May 9th - Last day of class
+- Thursday, May 10th - Review day
 
 ## Additional References
 
