@@ -6,7 +6,7 @@
 
 **Class Time**: 12:45 pm - 2:30 pm,	TR in LS 210
 
-**Office Hours**:  M 3-4p on [Zoom](https://usfca.zoom.us/my/cody.carroll) and W 1:45p-2:45p in the Hive (Harney Engineering area)
+**Office Hours**:  M 11a-12p on [Zoom](https://usfca.zoom.us/my/cody.carroll) and W 1:45p-2:45p in the Hive (Harney Engineering area)
 
 **Book**: [R for Data Science](http://r4ds.had.co.nz/index.html) by Hadley Wickham and Garrett Grolemund
 
