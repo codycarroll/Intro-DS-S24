@@ -101,12 +101,13 @@ Overall, this course will be split into two main parts: (1) learning the basics 
 |CS 3: ||Tuesday, 4/30|
 
 ### Final Project
+Final Presentation Dates: May 2nd, 7th, 9th.
+
 | Description | Due Date |
 |:--- | :---  |
-|[Project Signup](https://docs.google.com/spreadsheets/d/1UpXWnBNYKVqsB-zCNWmOE85OkPn9hDuUzM1_gjwHxIs/edit#gid=0) | |
-|[Final Project Description](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/Final_Project_Fall_2023.pdf) | |
+|[Project Signup](https://github.com/codycarroll/Intro-DS-S24/) | |
+|[Final Project Description](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/Final_Project_Spring_2024.pdf)||
 
-Final Presentation Dates: May 2nd, 7th, 9th
 
 
 ### Important Dates
