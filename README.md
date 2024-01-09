@@ -110,7 +110,7 @@ Final Presentation Dates: May 2nd, 7th, 9th.
 | Description | Due Date |
 |:--- | :---  |
 |[Project Signup](https://github.com/codycarroll/Intro-DS-S24/) | 4/1 @ 11:59p |
-|[Final Project Description](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/Final_Project_Spring_2024.pdf)| Slides: 5/1 @ 11:59p, Report: 5/16 @ 11/59p|
+|[Final Project Description](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/Final_Project_Spring_2024.pdf)| Slides: 5/1 @ 11:59p, Report: 5/16 @ 11:59p|
 
 
 
@@ -129,7 +129,14 @@ Final Presentation Dates: May 2nd, 7th, 9th.
 
 ## Additional References
 
-### Data Science
+
+### Data Science News
+* [Data Science Beginnings](https://open.spotify.com/show/5SY1TPw3FubdSxCqrxUKZv?si=a1eb2a858e384db3) A podcast hosted by me and Robert Clements, another prof in the MSDS program.
+* [R Weekly](https://rweekly.org/). About R.
+* [R-bloggers](https://www.r-bloggers.com/). About R.
+* [Data Tau](https://www.datatau.com/). About the DS industry.
+
+### Data Science Texts
 
 * [Data Manipulation with R](https://link.springer.com/book/10.1007%2F978-0-387-74731-6) by Spector.
 * [Data Science in R](http://www.crcnetbase.com/doi/book/10.1201/b18325) by Nolan & Temple Lang.
@@ -159,8 +166,3 @@ Final Presentation Dates: May 2nd, 7th, 9th.
 * [RStudio Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/).
 
 
-### News
-* [Data Science Beginnings](https://open.spotify.com/show/5SY1TPw3FubdSxCqrxUKZv?si=a1eb2a858e384db3) A podcast hosted by me and Robert Clements, another prof in the MSDS program.
-* [R Weekly](https://rweekly.org/). About R.
-* [R-bloggers](https://www.r-bloggers.com/). About R.
-* [Data Tau](https://www.datatau.com/). About the DS industry.
