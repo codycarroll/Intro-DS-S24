@@ -31,6 +31,8 @@ The focus of this course will be to provide you with the basic techniques availa
 - **Attendance** (15%): Attendance is checked at the beginning of class. It is your responsibility to show up on time. You will lose 1.5 points from this grade for every unexcused absence, and 0.5 points for every class period you show up late (i.e., after class has started but still within the first 15 minutes of class). 
 
 For example: If at the end of the semester, you had 1 unexcused absence and 2 late arrivals, your attendance score would be:
+
+
 15 - 1.5 - 2 * 0.5 = 12.5.
 
 - **Assignments** (40%): You will be assigned a computational assignment to be completed using RStudio and the package *knitr* regularly throughout class. [Grading Standards](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/standards.pdf)
