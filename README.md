@@ -95,15 +95,18 @@ Overall, this course will be split into two main parts: (1) learning the basics 
 ### Case Studies
 | Case Study | Data | Date |
 |:--- | :---  | :---:  |
-| CS 1:  |||
-|CS 2:   |||
-|CS 3: |||
+| Practice Case Study ||Thursday, 2/15|
+| CS 1:  ||Tuesday, 2/20|
+|CS 2:   ||Tuesday, 4/2|
+|CS 3: ||Tuesday, 4/30|
 
 ### Final Project
 | Description | Due Date |
 |:--- | :---  |
 |[Project Signup](https://docs.google.com/spreadsheets/d/1UpXWnBNYKVqsB-zCNWmOE85OkPn9hDuUzM1_gjwHxIs/edit#gid=0) | |
 |[Final Project Description](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/Final_Project_Fall_2023.pdf) | |
+
+Final Presentation Dates: May 2nd, 7th, 9th
 
 
 ### Important Dates
@@ -115,7 +118,8 @@ Overall, this course will be split into two main parts: (1) learning the basics 
 - Thursday, April 4th - Remote class - online lecture
 - Monday, Apr 8th - Last day to withdraw
 - Tuesday, Apr 9th - Final Project Workday - Meet with your teammates! (**No lecture.**)
-- Tuesday,  May 9th - Last day of class
+- May 2nd, 7th, 9th - Final Presentations
+- Thursday,  May 9th - Last day of class
 - Thursday, May 10th - Review day
 
 ## Additional References
