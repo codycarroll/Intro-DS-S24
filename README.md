@@ -109,8 +109,8 @@ Final Presentation Dates: May 2nd, 7th, 9th.
 
 | Description | Due Date |
 |:--- | :---  |
-|[Project Signup](https://github.com/codycarroll/Intro-DS-S24/) | |
-|[Final Project Description](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/Final_Project_Spring_2024.pdf)||
+|[Project Signup](https://github.com/codycarroll/Intro-DS-S24/) | 4/1 @ 11:59p |
+|[Final Project Description](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/Final_Project_Spring_2024.pdf)| Slides: 5/1 @ 11:59p, Report: 5/16 @ 11/59p|
 
 
 
