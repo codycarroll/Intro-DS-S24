@@ -45,6 +45,7 @@ Late assignments, projects, and case studies will not be accepted.
 Overall, this course will be split into two main parts: 
 
 (1) learning the basics of how to code in R and 
+
 (2) performing data analysis on real case studies and examples using data science techniques in R.
 
 
