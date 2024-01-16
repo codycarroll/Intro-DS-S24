@@ -22,6 +22,15 @@ By the end of this course, you will be able to
 - Communicate results using R markdown
 - Formulate data-driven hypotheses using exploratory data analysis and introductory model building techniques
 
+## Course Tenets:
+
+When in doubt, rely on the following:
+- Put the work in & ask for help when stuck.
+- Ask questions before spiraling.
+- When confused, work with a partner & zoom into details.
+- When you understand, teach others & zoom out to debrief.
+- Use common sense whenever possible.
+
 ## Course Overview
 
 ### Assessment
