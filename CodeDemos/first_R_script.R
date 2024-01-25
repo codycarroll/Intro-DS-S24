@@ -86,6 +86,7 @@ ggplot(data = df, aes(x = x, y = y)) +
 
 #clear just x
 rm(x)
+x
 
 #ls: looks at everything
 ls()
