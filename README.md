@@ -85,9 +85,9 @@ Overall, this course will be split into two main parts:
   
  | Topic | Reading | Lab Assignment (HW) | Due Date | Code Demos|
    | :---  | :---:  | :---:  | :---:  | :---: |
-   | [Plotting in R](https://github.com/codycarroll/Intro-DS-S24/blob/main/Lectures/Plotting%20in%20R.pdf) | [Ch. 3 in R for Data Science](https://r4ds.had.co.nz/data-visualisation.html) [How to Lie with Charts](https://handsondataviz.org/how-to-lie-with-charts.html)| | | [ggplot](https://github.com/codycarroll/Intro-DS-S24/blob/main/CodeDemos/ggplot1.R)|
+   | [Plotting in R](https://github.com/codycarroll/Intro-DS-S24/blob/main/Lectures/Plotting%20in%20R.pdf) | [Ch. 3 in R for Data Science](https://r4ds.had.co.nz/data-visualisation.html) | | | [ggplot](https://github.com/codycarroll/Intro-DS-S24/blob/main/CodeDemos/ggplot1.R)|
    | [Input and Output]() | | | | [Input and Output](https://github.com/codycarroll/Intro-DS-S24/blob/main/CodeDemos/Input_Output.R) |
-   |[More Plotting with ggplot2](https://github.com/codycarroll/Intro-DS-S24/blob/main/CodeDemos/ggplot2_dogs.R)| [Ch. 3 in R for Data Science](https://r4ds.had.co.nz/data-visualisation.html) ||| [ggplot and dogs](https://github.com/codycarroll/Intro-DS-S24/blob/main/CodeDemos/ggplot2_dogs.R) | 
+   |[More Plotting with ggplot2](https://github.com/codycarroll/Intro-DS-S24/blob/main/CodeDemos/ggplot2_dogs.R)| [How to Lie with Charts](https://handsondataviz.org/how-to-lie-with-charts.html)||| [ggplot and dogs](https://github.com/codycarroll/Intro-DS-S24/blob/main/CodeDemos/ggplot2_dogs.R) | 
    | [Wrangling Data](https://github.com/codycarroll/Intro-DS-S24/blob/main/Lectures/Wrangling%20Data.pdf) | [Ch. 12 in R for Data Science](https://r4ds.had.co.nz/tidy-data.html) | [HW4](https://github.com/codycarroll/Intro-DS-S24/blob/main/Assignments/HW4.pdf)| Friday 3/29| [Wrangling Data](https://github.com/codycarroll/Intro-DS-S24/blob/main/CodeDemos/data_wrangling.R)|
    
   **Statistical Modeling in R**
