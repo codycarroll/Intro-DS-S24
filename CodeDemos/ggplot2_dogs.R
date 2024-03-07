@@ -3,7 +3,9 @@ library(ggplot2)
 
 #Let's look at a dataset about dogs!
 
-dogs = read.csv("~/Desktop/dogs.csv")
+dogs = read.csv("~/Desktop/repos/Intro-DS-S24/Data/dogs.csv")
+
+View(dogs)
 
 ###1. Data Cleaning
 #Look at the data as it is now... it's a bit messy!
@@ -29,6 +31,8 @@ str(dogs)
 #weight
 #height
 #ailments (# of genetic issues)
+
+dogs$food_cost
 
 #Some of these are easy, though the missings will become NA by coercion:
 dogs$intelligence_rank = dogs$intelligence_rank %>% as.numeric
@@ -62,10 +66,13 @@ dogs$kids = dogs$kids %>% as.factor()
 dogs$size = dogs$size %>% as.factor()
 
 #Finally let's refactor them to be more transparent:
-levels(dogs$grooming) = c("daily", "weekly", "monthly", "unknown")
+dogs$grooming
+dogs$kids
+levels(dogs$grooming) = c("daily", "weekly/biweekly", "unknown")
 levels(dogs$kids) = c("high", "medium", "low", "unknown")
   
-
+dogs$grooming
+dogs$kids
 
 ### 2. Exploratory Data Analysis
 #
@@ -79,11 +86,20 @@ levels(dogs$kids) = c("high", "medium", "low", "unknown")
 
 
 library(ggplot2)
-ggplot(dogs, aes(x = group, y = height)) + 
+ggplot(dogs, 
+       aes(x = group, y = height)) + 
   geom_boxplot()
 
 #Let's take out the unknowns - there's nothing useful there:
 dogs_known = dogs %>% subset(group != "unknown")
+
+ggplot(dogs_known, 
+       aes(x = group, y = height)) + 
+  geom_boxplot()
+
+ggplot(dogs_known %>% subset(group == "herding" | group == "toy"), 
+       aes(x = group, y = height)) + 
+  geom_boxplot()
 
 #Let's also factor reorder by height & add fill colors!
 ggplot(dogs_known, 
@@ -93,6 +109,16 @@ ggplot(dogs_known,
   geom_boxplot() + 
   xlab("group")
 
+#take off legend
+ggplot(dogs_known, 
+       aes(x = fct_reorder(group, height, .na_rm = TRUE), 
+           y = height, 
+           fill = group)) + 
+  geom_boxplot() + 
+  xlab("group") + 
+  theme(legend.position = "none")
+
+
 # We could also add violin plots on top, which show the
 # density sideways along the box plot.
 ggplot(dogs_known, 
@@ -101,7 +127,8 @@ ggplot(dogs_known,
            fill = group)) + 
   geom_boxplot() + 
   geom_violin() + 
-  xlab("Group")
+  xlab("Group") + 
+  theme(legend.position = "none")
 
 
 # If we use a density plot, how can we display the groups?
@@ -151,6 +178,29 @@ ggplot(dogs_known,
 # To get inspiration, try plotting different cols in the 
 # dogs data with scales = "free" or not!
 
+
+ggplot(dogs_known,
+       aes(x = weight,
+           y = height, 
+           color = size)) + 
+  geom_point()
+
+
+ggplot(dogs_known,
+       aes(x = weight,
+           y = height)) + 
+  geom_point() + 
+  facet_wrap(~fct_reorder(size, height))
+
+ggplot(dogs_known,
+       aes(x = weight,
+           y = height)) + 
+  geom_point() + 
+  facet_wrap(~fct_reorder(size, height), 
+             scales = "free")
+
+
+
 # Facets also work with ridge plots.
 ggplot(dogs_known, 
        aes(x = height, y = 1)) + #note the y = 1 here - replace it by group and see what happens! 
@@ -190,6 +240,12 @@ ggplot(dogs_known,
   geom_density() +
   facet_grid(grooming ~ fct_reorder(size, height))
 
+
+ggplot(dogs_known, 
+       aes(height)) + 
+  geom_density() +
+  facet_grid( fct_reorder(size, height) ~ grooming)
+
 # When to use facets vs. aesthetics?
 #   * facet: When aesthetics put tons of info on the plot
 #   (too many lines, too many points, etc) - info density overload.
@@ -207,9 +263,9 @@ ggplot(dogs_known,
 # For example, this is a case where it's not so
 # necessary to use facets...
 # They don't help us see more info than just using an aes!
-ggplot(dogs_known, aes(size, fill = grooming)) + 
-  geom_bar() + 
-  facet_wrap(~ grooming)
+ggplot(dogs_known, 
+       aes(size, fill = grooming)) + 
+  geom_bar()
 
 # Q:  What to do with two continuous variables?
 #
@@ -228,6 +284,10 @@ vars = c("height","weight")
 ggpairs(dogs_known[,vars], 
         aes(alpha = 0.4))
 
+vars = c("height","weight", "price")
+ggpairs(dogs_known[,vars], 
+        aes(alpha = 0.4))
+
 
 #Q: What about three continuous variables??
 
@@ -237,9 +297,10 @@ ggpairs(dogs_known[,vars],
 # We can't use facets bc lifetime_cost is continuous. 
 # Instead we can use aesthetics that work with continuous variables.
 
-ggplot(dogs_known, aes(height, 
-                 weight, 
-                 color = lifetime_cost)) + 
+ggplot(dogs_known, 
+       aes(height, 
+           weight, 
+           color = lifetime_cost)) + 
   geom_point()
 
 # Warning! Small differences in color are hard to judge, 
@@ -252,7 +313,7 @@ ggplot(dogs_known, aes(height,
                  weight, 
                  color = lifetime_cost, 
                  size = lifetime_cost)) +
-  geom_point()
+  geom_point(alpha = 0.5)
 
 #btw you can turn the legends off for each aes with guides()
 #and change the aes names in the legend with labs()
@@ -260,7 +321,7 @@ ggplot(dogs_known, aes(height,
                  weight, 
                  color = lifetime_cost, 
                  size = lifetime_cost)) +
-  geom_point() + 
+  geom_point(alpha = 0.5) + 
   guides(size = FALSE) + 
   labs(color = "Lifetime Cost")
 
@@ -269,11 +330,11 @@ ggplot(dogs_known, aes(height,
                        weight, 
                        color = lifetime_cost, 
                        size = lifetime_cost)) +
-  geom_point() + 
+  geom_point(alpha = 0.5 ) + 
   guides(size = FALSE) + 
   labs(color = "Lifetime Cost") + 
-  scale_color_gradient(low="blue", high="red")
-  #scale_color_gradientn(colours = rainbow(5))
+  #scale_color_gradient(low="blue", high="red")
+  scale_color_gradientn(colours = rainbow(5))
 
 
 # Notice the points overlap -- this is called overplotting. 
@@ -296,11 +357,13 @@ ggplot(dogs_known, aes(height,
 #
 # For instance, let's swap weight and lifetime_cost:
 
-ggplot(dogs_known, aes(height, 
-                 lifetime_cost, 
-                 color = weight, 
-                 size = weight)) +
-  geom_point(alpha = 0.5)
+ggplot(dogs_known, 
+       aes(height, 
+           lifetime_cost, 
+           color = weight, 
+           size = weight)) +
+  geom_point(alpha = 0.5) + 
+  scale_color_viridis_c()
 
 # Downside: the plot emphasizes the relationship between
 # height and lifetime_cost (which is weak), rather than the
