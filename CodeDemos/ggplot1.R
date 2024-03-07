@@ -13,6 +13,9 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 food = read_csv(file = "../Data/Food.csv")
 head(food)
 
+View(food)
+
+## Data Cleaning
 unique(food$pnns_groups_1)
 
 #How can we combine/refactor our categories to consolidate duplicates?
@@ -31,6 +34,8 @@ newpnns1 = fct_collapse(food$pnns_groups_1,
 
 food$food_group = newpnns1
 
+unique(food$food_group)
+table(food$food_group)
 
 library(ggplot2)
 
@@ -43,14 +48,15 @@ library(ggplot2)
 #Interesting (and useful) - ggplots are objects, so they can be saved and loaded
 #easily
 
-#plot a bar chart of pnns_groups_1
-ggplot(food) + 
-  geom_bar(aes(x = food_group, fill = food_group))
+#plot a bar chart of food_groups
+ggplot(data = food,
+       aes(x = food_group, fill = food_group)) + 
+  geom_bar()
 
 #text trainwreck on bottom; to rotate xaxis labels use this:
 ggplot(food) + 
   geom_bar(aes(x = food_group, fill = food_group)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 #plot in a new window
 dev.new()
@@ -63,6 +69,13 @@ ggplot(food) +
 ggplot(food) + 
   geom_bar(aes(x = food_group, fill = food_group)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  xlab("food type") + 
+  ggtitle("Food Groups")
+
+ggplot(food) + 
+  geom_bar(aes(x = food_group, fill = food_group)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  theme(legend.position = "none") +
   xlab("food type") + 
   ggtitle("Food Groups")
 
@@ -80,8 +93,10 @@ plot(data[, 1:3])
 
 #equivalent way of doing this with ggplot w/ ggally pkg:
 
+
 library(GGally)
-ggpairs(data, aes(alpha = 0.4))
+ggpairs(data, 
+        aes(alpha = 0.4))
 
 #--------------------
 
@@ -89,7 +104,8 @@ ggpairs(data, aes(alpha = 0.4))
 dev.new()
 
 gg1 = ggplot(food, aes(x = energy_100g)) + 
-  geom_histogram(color="black", fill="white")
+  geom_histogram(color="black",
+                 fill="steelblue")
 gg1
 
 dev.new()
@@ -98,7 +114,9 @@ gg1
 
 #same histogram but with more bars (100 of them)
 gg2 = ggplot(food, aes(x = energy_100g)) + 
-  geom_histogram(color="black", fill="white", bins = 100) 
+  geom_histogram(color="black", 
+                 fill="white", 
+                 bins = 20) 
 gg2
 
 #side-by-side plotting w/ ggarrange
@@ -106,14 +124,16 @@ library(ggpubr)
 ggarrange(gg1, gg2)
 
 
-#adding a density curve on top of a histogram
+ggarrange(gg1, gg2, gg1, gg2, 
+          nrow = 2, ncol = 2)
 
+#adding a density curve on top of a histogram
 ggplot(food, aes(x = energy_100g)) + 
   geom_histogram(aes(y = after_stat(density)), 
                  color="black", 
                  fill="white", 
                  bins = 100) +
-  geom_density(alpha=.2, fill="red")
+  geom_density(alpha=.2, color="red")
 
 
 #-------------------------------
@@ -125,7 +145,8 @@ ggplot(food) +
 #show boxplot of this variable across food groups in
 #pnns_groups_1
 ggplot(food) + 
-  geom_boxplot(aes(x = energy_100g, fill = food_group))
+  geom_boxplot(aes(x = energy_100g, 
+                   fill = food_group))
 
 ggplot(food) + 
   geom_boxplot(aes(x = energy_100g, fill = food_group)) + 
@@ -154,7 +175,9 @@ diamonds = read.csv(file = "../Data/diamonds.csv",
 #according to diamond color
 
 plot1 = ggplot(diamonds, 
-               aes(x = carat, y = price, colour = color))
+               aes(x = carat, 
+                   y = price, 
+                   colour = color))
 plot1 #note this is blank because we haven't told it what kind of plot yet
 
 plot2 = plot1 + 
@@ -180,6 +203,8 @@ plot3
 # to do this, we need to re-order our specifications.
 plot1b = ggplot(diamonds, 
                 aes(x = carat, y = price))
+plot1b
+
 
 plot2b = plot1b + 
   geom_smooth() #line first
@@ -226,8 +251,17 @@ plot4 +
 #Exercise:
 
 #1. Explore other plots you can make with ggplot and the diamond dataset. 
-#Can you make a hypothesis about two characteristics and then evaluate it with a ggplot?
+#Can you make a hypothesis about two characteristics and 
+# then evaluate it with a ggplot?
 
-#2. Plot some data visualizations of your class survey data. Save the most interesting plots and interpret your findings. 
+ggplot(diamonds,
+       aes(x = clarity,
+           y = price)) + 
+  geom_hex()
+  
+
+
+#2. Plot some data visualizations of your class survey data.
+#Save the most interesting plots and interpret your findings. 
 
 
