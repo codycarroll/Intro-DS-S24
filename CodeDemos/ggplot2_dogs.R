@@ -326,7 +326,7 @@ ggplot(dogs_known, aes(height,
   labs(color = "Lifetime Cost")
 
 #We can also change the scale of colors to make it easier to discern differences:
-ggplot(dogs_known, aes(height, 
+ggplot(dogs_known, aes(intelligence_rank, 
                        weight, 
                        color = lifetime_cost, 
                        size = lifetime_cost)) +
@@ -371,6 +371,11 @@ ggplot(dogs_known,
 #
 # Takeaway: When you make your plot, think about what you're trying to
 # show and if that matches what the reader will see!
+
+
+ggplot(dogs_known, 
+       aes(x = height, 
+           y = weight))
 
 
 # Accessibility and Graphic Design
