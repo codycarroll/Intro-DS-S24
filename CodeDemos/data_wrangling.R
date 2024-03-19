@@ -147,8 +147,10 @@ ggplot(Oxboys, aes(x = age + 1,
   stat_summary(fun.y = identity, geom = "point") + 
   stat_summary(fun.y = identity, geom = "line") + 
   theme(legend.position = "none")
+
 #NOTE:
-#longitudinal data (time-varying measurements) need to be in long format for ggplot to visualize
+#longitudinal data (time-varying measurements) need to be in 
+#long format for ggplot to visualize
 
 
 
@@ -214,13 +216,14 @@ demo_df %>% select(num)
 demo_df %>% select(c(num, color))
 
 ### using flights.csv data
-flights = read.csv("~/Desktop/repos/Intro-DS-F23/Data/flights.csv")
+flights = read.csv("~/Desktop/repos/Intro-DS-S24/Data/flights.csv")
 head(flights)
 
 #select demo
 flights %>% select(c(dep, arr)) %>% head
 
-flights %>% select(dep_delay:plane) %>% head#colon is start:stop
+flights %>% select(dep_delay:plane) %>% head
+#colon is start:stop
 
 flights %>% select(ends_with("delay")) %>% head
 
@@ -270,9 +273,10 @@ flights %>% str
 
 hour_diff = flights$arr_hr - flights$dep_hr
 min_diff = flights$arr_min - flights$dep_min
-negative_min = (min_diff < 0)
+negative_min = (min_diff < 0) %>% as.numeric
 
-flights = flights %>% mutate(duration = str_c(((hour_diff %>% mod(24)) - negative_min), " hours and ", min_diff %>% mod(60), " minutes."))
+flights = flights %>% 
+  mutate(duration = str_c(((hour_diff %>% mod(24)) - negative_min), " hours and ", min_diff %>% mod(60), " minutes."))
 head(flights)
 #1 hr 10 min
 
@@ -287,7 +291,7 @@ demo_df %>%
 
 
 #Exercise:
-#Calculate average expected departure delay grouped by airport. 
-# Which airport has the longest delays on avg? Which has the shortest?
-#Calculate average expected departure delay grouped by carrier.
+
+# Calculate average expected departure delay grouped by carrier.
+# Write out/Save the summary table as a .csv called "avg_departure_delay.csv".
 # Which carrier has the longest delays on avg? Which has the shortest?
