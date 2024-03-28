@@ -128,17 +128,22 @@ ggplot(my_sep_tidy_df2, aes(x = time_of_day, y = time)) +
 # within the same subject with a line. Remove the legend using 
 # theme() and the `legend.position` argument.
 # x = age, y = height
-
+?Oxboys
 head(Oxboys)
 
 #btw this is called a spaghetti plot
-ggplot(Oxboys, aes(x = age + 1, 
+gg = ggplot(Oxboys, aes(x = age + 1, 
                    y = height, 
                    group = Subject, 
                    colour = Subject)) + 
   geom_line() + 
   geom_point() + 
   theme(legend.position = "none")
+
+
+ggsave(filename = "~/Desktop/oxford_boys_plot.png", 
+       plot = gg)
+
 
 #or
 ggplot(Oxboys, aes(x = age + 1, 
@@ -164,7 +169,47 @@ my_tidy_df1
 
 #Exercise:
 # 1. Pivot my_tidy_df2 back into wide format. 
+
+my_tidy_df2
+
+
+pivot_wider(my_tidy_df2,
+            names_from = sample,
+            values_from = time)
+
+
 # 2. Figure out how to get my_sep_tidy_df2 back to original form of my_df2. 
+
+my_sep_tidy_df2
+
+?separate
+
+unite(my_sep_tidy_df2, 
+      location, 
+      time_of_day)
+
+
+
+df <- expand_grid(x = c("a", NA), y = c("b", NA))
+df
+
+df %>% unite("z", x:y, remove = FALSE)
+
+intermediate_df = my_sep_tidy_df2 %>% unite("sample", 
+                          location:time_of_day, 
+                          remove = TRUE)
+
+pivot_wider(intermediate_df, 
+            names_from = sample,
+            values_from = time)
+
+
+# Recap:
+# pivot_longer()
+# pivot_wider()
+# separate()
+# unite()
+
 
 #-----------------------
 
@@ -210,14 +255,20 @@ my_df1 %>%
 demo_df = data.frame(num = c(1,2,3,4,5), 
                       color = c("blue", "yellow", "yellow", "blue", "blue"))
 
+library(dplyr)
+
 # select a column from a data frame 
 demo_df %>% select(color)
+
 demo_df %>% select(num)
+
 demo_df %>% select(c(num, color))
 
 ### using flights.csv data
 flights = read.csv("~/Desktop/repos/Intro-DS-S24/Data/flights.csv")
 head(flights)
+
+dim(flights)
 
 #select demo
 flights %>% select(c(dep, arr)) %>% head
@@ -234,18 +285,28 @@ head(flights)
 ?arrange
 
 demo_df %>% arrange(color)
+
 demo_df %>% arrange(-num)
 
 flights %>% arrange(dist)
+
+flights %>% arrange(dist) %>% tail
+
 flights %>% arrange(dest)
 
+flights %>% arrange(dest) %>% tail
+
 #mutate demo (review)
-demo_df %>% mutate(squared = num^2)
+demo_df %>% mutate(squared = num^2,
+                   num_by_2 = num/2)
 
 library(stringr)
+#how do I extract the hour of the departure?
 flights$dep %>% 
   str_pad(width = 4, pad = "0") %>% 
   substr(start = 1, stop = 2)
+
+View(flights)
 
 flights = flights %>% mutate(dep_hr = dep %>% 
                                str_pad(width = 4, pad = "0") %>% 
@@ -265,6 +326,36 @@ flights %>% head
 #Exercise: 
 #Calculate expected duration of each flight using mutate. 
 
+
+#Expected duration = how long the flight will take in hours and minutes
+#e.g. if departure is 1400 and arrival is 1500, the expected duration is 
+# 1 hour and 0 minutes long!
+
+#Hint: use the dep_hr, dep_min, arr_hr, and arr_min columns we just created!
+
+str(flights)
+
+flights$dep_hr = flights$dep_hr %>% as.numeric()
+flights$arr_hr = flights$arr_hr %>% as.numeric()
+flights$dep_min = flights$dep_min %>% as.numeric()
+flights$arr_min = flights$arr_min %>% as.numeric()
+
+hr_diff = flights$arr_hr - flights$dep_hr
+min_diff = flights$arr_min - flights$dep_min
+min_diff_neg = (min_diff < 0) %>% as.numeric()
+
+
+hr_diff = hr_diff - min_diff_neg
+min_diff = min_diff + 60*min_diff_neg
+
+flights = flights %>% mutate(hr_diff = hr_diff,
+                  min_diff = min_diff)
+
+flights = flights %>% mutate(duration = paste(hr_diff,"h",min_diff,"m"))
+
+View(flights)
+
+#optional shortcut
 for(i in 15:18){
   flights[,i] = flights[,i] %>% as.numeric
 }
@@ -290,8 +381,24 @@ demo_df %>%
   mutate(avgnum = mean(num))
 
 
+demo_df %>% 
+  group_by(color) %>% 
+  summarise(avgnum = mean(num))
+
+
 #Exercise:
 
 # Calculate average expected departure delay grouped by carrier.
-# Write out/Save the summary table as a .csv called "avg_departure_delay.csv".
+
+summary_tbl = flights %>% 
+  group_by(carrier) %>% 
+  summarise(avgdepdelay = mean(dep_delay, na.rm = TRUE))
+
 # Which carrier has the longest delays on avg? Which has the shortest?
+
+summary_tbl %>% arrange(avgdepdelay)
+
+# Write out/Save the summary table as a .csv called "avg_departure_delay.csv".
+
+write.csv(summary_tbl, file = "~/Desktop/avg_departure_delay.csv")
+

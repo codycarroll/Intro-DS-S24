@@ -1,14 +1,14 @@
 ---
 title: "Linear Regression Lecture Demo"
 author: "Cody Carroll"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-
 
 This data set provides measurements of the diameter, height and volume of timber in 31 felled black cherry trees.
 
@@ -21,15 +21,25 @@ trees
 treedata=trees
 colnames(treedata) = c("Diameter",  "Height", "Volume")
 
+treedata
+
+
 ggplot(treedata, aes(x=Diameter, y=Volume)) + 
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm", se = FALSE)
 
 ```
 
 Fit a linear model, add the least squares regression line:
 ```{r}
 treeline = lm(Volume ~ Diameter, data=treedata)
+
+
+treeline
+summary(treeline)
+
+
+
 #lm(y ~ x, data = data)
 treedata$predicted = predict(treeline)   # Save the predicted values
 treedata$residuals = residuals(treeline) # add residuals to the data.frame
@@ -58,16 +68,13 @@ summary(treeline)
 
 #predict the volume for the 10th tree in my dataset
 treedata[10,]
--36.94+5.07*(11.2)
+-36.943+5.066*(11.2)
 
-
+#11th
 treedata[11,]
--36.94+5.07*(11.3)
+-36.943+5.066*(11.3)
 
 ```
-
-
-
 
 
 Interpret the meaning of slope and intercept.
@@ -86,6 +93,13 @@ we expect its volume to increase by 5.0659 cubic ft.
 ##Q: What is the expected increase or decrease in volume of a tree if I
 ##increase its diameter by 5 in? 
 
+
+-36.9435 + 5.0659*12 #predicted vol for a 12in diam tree, 23.8473
+-36.9435 + 5.0659*17 
+
+
+49.1768 - 23.8473
+5*5.066
 #slope * change in x  = expected difference in y 
 
 5.0659 * 5 
@@ -97,7 +111,7 @@ we expect its volume to increase by 5.0659 cubic ft.
 
 
 #Q: What is the unit of the slope? 5.0659 cu. ft / in. 
-#
+
 ```
 
 Intercept:
@@ -117,8 +131,11 @@ Let's try it with your class data. What's the relationship between shoe size and
 survey = read.csv("~/Desktop/repos/master-intro-ds/Data/casestudy1_data.csv")
 
 ggplot(survey, aes(x=heightcm, y=shoesize)) + 
-  geom_point() 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
 surveyline=lm(shoesize ~ heightcm, data = survey)
+
 summary(surveyline)
 
 
@@ -133,7 +150,7 @@ What shoe size would we expect someone who is 180cm (6') to have?
 summary(surveyline)
 
 
--14.85663 + 0.13809 * 180 #predicted shoesize of a 180cm person
+-15.9871 + 0.1448 * 180 #predicted shoesize of a 180cm person
 ```
 
 
@@ -143,7 +160,7 @@ summary(surveyline)
 
 Doing it by hand:
 ```{r}
--14.85663+0.13809*(180) #~size 10
+-15.9871 + 0.1448 * 180  #~size 10
 ```
 
 Doing it by extracting the "coefficients":
@@ -155,6 +172,9 @@ surveyline$coefficients[1] + surveyline$coefficients[2] * 180
 Doing it by using the predict function:
 ```{r}
 newdf = data.frame(heightcm = 180)
+
+
+
 predict(surveyline, newdf)
 #first model, second newdf with x values you want to predict at
 
@@ -165,7 +185,7 @@ cbind(xs, yhats)
 ```
 
 Which pair of variables are more strongly related? 
-Tree girth & volume? Or student height & shoe size?
+Tree diameter & volume? Or student height & shoe size?
 
 ```{r}
 gg1 = ggplot(treedata, aes(x=Diameter, y=Volume)) + 
@@ -184,7 +204,7 @@ The strength of the /linear/ relationship is measured by the $R^2$ statistic:
 
 ```{r}
 summary(treeline) #0.9353
-summary(surveyline) #0.5955
+summary(surveyline) #0.6145
 
 summary(treeline)$r.squared
 summary(surveyline)$r.squared
@@ -193,12 +213,37 @@ summary(surveyline)$r.squared
 #R^2 closer to 0: very weak linear relationship between x and y.
 #R^2 is closer to 1: very strong linear relationship between x and y. 
 
+```
+
+```{r}
 
 #Exercise: 
 #In your survey data find a pair of variables x and y such that the R^2 value is nearly 1. 
 
+
+ggplot(survey, aes(x = tattoos, y = sleep)) + 
+  geom_point()
+
+
+
+ggplot(survey, aes(x = heightcm, y = heightin)) + 
+  geom_point()
+
+no_outliers = survey %>% filter(heightin > 20)
+
+ggplot(no_outliers, aes(x = heightcm, y = heightin)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+height_lm = lm(heightin ~ heightcm, data = no_outliers)
+summary(height_lm)$r.squared
+
+```
+
+
+```{r}
 library(GGally)
-ggpairs(survey[,10:15])
+ggpairs(no_outliers[,11:16])
 
 
 ggplot(survey, aes(x = heightcm, y = heightin)) + 
@@ -228,8 +273,18 @@ summary(mod)
 
 
 #Exercise: find a pair of x and y variables where R^2 is very close to 0. 
+ggplot(no_outliers, aes(x = tattoos, y = number)) + 
+  geom_point()
+
+model = lm(number ~ tattoos, data = no_outliers)
+summary(model)$r.squared
+
+colnames(no_outliers)
 
 
+```
+
+```{r}
 ggplot(survey, aes(x = X, y = number)) + 
   geom_point()
 
@@ -244,7 +299,7 @@ It can be interpreted as the fraction of variation in $y$ explained by the regre
 $R^2$ has a somewhat technical definition; has to do with residuals and variance of $y$. Not our focus here. 
 
 #FYI
-# $R^2 = 1 - SSE/SST$
+#$R^2 = 1 - SSE/SST$
 
 
 # Residual plot
@@ -273,6 +328,17 @@ ggplot(treedata, aes(x=Diameter, y=Volume)) +
   geom_segment(aes(xend = Diameter, yend = predicted), color = "red")
 ```
 
+```{r}
+
+survey$residuals
+survey$predicted = predict(surveyline)
+
+ggplot(survey, aes(x=heightcm, y=shoesize)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_point(aes(y = predicted), shape = 1) +
+  geom_segment(aes(xend = heightcm, yend = predicted), color = "red")
+```
 
 
 How does this relate back to our original linear regression plot?
@@ -304,7 +370,7 @@ ggplot(womendata, aes(x=height, y=residuals)) +
   geom_hline(aes(yintercept = 0), color="blue") + 
   geom_point()
 ```
-Clear pattern -> linear regression not appropriate/
+Clear pattern -> linear regression not appropriate.
 What does this mean?
 The linear regression is making systematic errors in its predictions.
 We should use something other than a line to model the relationship!
@@ -374,13 +440,15 @@ apply(anscombe, 2, sd)
 
 ##>>>Note that the data were recorded in the 1920s.<<<
 str(cars)
-ggplot(cars, aes(x=speed, y=dist)) + geom_point()
+ggplot(cars, aes(x=speed, y=dist)) + 
+  geom_point()
 
 #fit the least squares line
 carsline=lm(dist~speed, data=cars)
 summary(carsline)
 ggplot(cars, aes(x=speed, y=dist)) + 
-  geom_point() + geom_smooth(method = "lm", se = FALSE)
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
 ```
 
 Now let's say I wanted to estimate the distance taken to stop for a car going 120mph.
