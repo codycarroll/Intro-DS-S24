@@ -242,4 +242,8 @@ Now use the `predict()` function to provide predictions for 5 movies which have 
 
 ```
 
+## Playing around with Least Squares Visualization:
 
+Read through this website and experiment with the interactive plots to gain a better understanding of how linear regression slope and intercept estimates are acquired:
+
+https://setosa.io/ev/ordinary-least-squares-regression/
