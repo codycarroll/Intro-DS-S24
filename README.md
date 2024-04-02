@@ -112,7 +112,7 @@ Overall, this course will be split into two main parts:
 | Case Study | Data | Date |
 |:--- | :---  | :---:  |
 | Practice Case Study ||Thursday, 2/15|
-| CS 1:  ||Tuesday, 2/20|
+| CS 1:  |Class Survey Data|Tuesday, 2/20|
 |CS 2:   ||Tuesday, 4/2|
 |CS 3: ||Tuesday, 4/30|
 
