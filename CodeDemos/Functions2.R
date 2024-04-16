@@ -43,6 +43,7 @@ library(fdapace, quietly = TRUE)
 
 mtcars
 
+#### LAB #####
 
 #define a function which takes rows a thru b of mtcars
 
@@ -51,33 +52,79 @@ mtcars
 #2. define a function which takes rows a thru b of a general data frame `df`
 
 
-rows_atob = function(a,b){
-  mtcars[a:b,]
+
+
+
+##--in class lab 
+
+#return rows a through b of a given df (e.g. mtcars)
+rows.df = function(a, b, df){
+  #-------------- checks on input ----------------
+  #first, we need these values to be integers
+  if(!is.integer(a) | !is.integer(b)){
+    return("a and b must be integers!")
+  }
+  #second, we need 0 < a <= b <= 32 because of the dimensions of the
+  #data set
+  if(a > b){
+    return("a is greater than b. Please make sure that a <= b.")
+  }
+  if(a <= 0){
+    return("a must be a positive integer.")
+  }
+  #checking whether b is greater than the number of rows in df
+  if(b > dim(df)[1]){
+    return("b must be an integer less than or equal to the number of rows in df.")
+  }
+  
+  #check that df is a data frame or a matrix
+  if(!is.data.frame(df) & !is.matrix(df)){
+    return("df must be a data frame or a matrix")
+  }
+  
+  #-------------- main expression ----------------
+  return(df[a:b, ])
 }
 
-mtcars
+rows.df(1L, 33L, mtcars)
 
-rows_atob(1, 5)
-
-rows_atob(2, 4)
-
-rows_atob(b = 4, a = 2) #be aware of naming formals 
-
-
-rows_df_atob = function(df, a, b){
-  df[a:b,]
+#square function 1 - note I will not do all of the checks as we did above.
+#but in general we'd need to check that the arguments satisfy what we'd like them to be.
+square.fun1 = function(vec){
+  #vec - a numeric vector
+  vec.squared = vec^2
+  df = data.frame(Original = vec, Squared = vec.squared)
+  #let's use our function from above
+  #let's make sure we always get a printout from the data frame
+  #if there are not 10 rows, we'll print out all rows
+  if(dim(df)[1] < 10){
+    return(df)
+  }else{
+    return(rows.df(a = 1L, b = 10L, df))
+  }
 }
 
-rows_df_atob(iris, 1, 5)
-rows_df_atob(mtcars, 1, 5)
+square.fun1(runif(15))
 
-vector_f = function(vec){
-  vecsq = vec^2
-  df = data.frame(vec = vec, vecsq = vecsq)
-  df[1:10,]
+square.fun1(runif(5))
+#square function 2
+
+#Example of Name Masking and searching for variables
+
+x = 1
+my.func1 = function(){
+  x = 1000
+  y = 2
+  my.func2 = function(){
+    x = 99
+    z = 3
+    return(c(x, y, z))
+  }
+  my.func2()
 }
 
-vector_f(1:20)
+
+my.func1()
 
 
 rm(list=ls())
@@ -161,78 +208,6 @@ myFunc_11 <- function(a, b) {
 
 myFunc_11()
 
-
-
-##--in class lab 
-
-#return rows a through b of a given df (e.g. mtcars)
-rows.df = function(a, b, df){
-  #-------------- checks on input ----------------
-  #first, we need these values to be integers
-  if(!is.integer(a) | !is.integer(b)){
-    return("a and b must be integers!")
-  }
-  #second, we need 0 < a <= b <= 32 because of the dimensions of the
-  #data set
-  if(a > b){
-    return("a is greater than b. Please make sure that a <= b.")
-  }
-  if(a <= 0){
-    return("a must be a positive integer.")
-  }
-  #checking whether b is greater than the number of rows in df
-  if(b > dim(df)[1]){
-    return("b must be an integer less than or equal to the number of rows in df.")
-  }
-  
-  #check that df is a data frame or a matrix
-  if(!is.data.frame(df) & !is.matrix(df)){
-    return("df must be a data frame or a matrix")
-  }
-  
-  #-------------- main expression ----------------
-  return(df[a:b, ])
-}
-
-rows.df(1L, 33L, mtcars)
-
-#square function 1 - note I will not do all of the checks as we did above.
-#but in general we'd need to check that the arguments satisfy what we'd like them to be.
-square.fun1 = function(vec){
-  #vec - a numeric vector
-  vec.squared = vec^2
-  df = data.frame(Original = vec, Squared = vec.squared)
-  #let's use our function from above
-  #let's make sure we always get a printout from the data frame
-  #if there are not 10 rows, we'll print out all rows
-  if(dim(df)[1] < 10){
-    return(df)
-  }else{
-    return(rows.df(a = 1L, b = 10L, df))
-  }
-}
-
-square.fun1(runif(15))
-
-square.fun1(runif(5))
-#square function 2
-
-#Example of Name Masking and searching for variables
-
-x = 1
-my.func1 = function(){
-  x = 1000
-  y = 2
-  my.func2 = function(){
-    x = 99
-    z = 3
-    return(c(x, y, z))
-  }
-  my.func2()
-}
-
-
-my.func1()
 
 ##Default arguments in a function
 
