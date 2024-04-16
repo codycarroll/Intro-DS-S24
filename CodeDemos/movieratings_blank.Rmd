@@ -1,8 +1,8 @@
 ---
 title: "Movie Ratings"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 date: "`r Sys.Date()`"
 ---
 
@@ -34,6 +34,11 @@ Throughout this .Rmd file, fill in the blank code chunks with the relevant code 
 ```{r}
 # read in the movieratings.csv file
 
+
+ratings = read.csv("~/Desktop/repos/Intro-DS-S24/Data/movieratings.csv")
+
+View(ratings)
+
 ```
 
 ```{r}
@@ -45,7 +50,6 @@ Throughout this .Rmd file, fill in the blank code chunks with the relevant code 
 
 
 ```{r}
-
 #Give a 5 number summary for 
 #1. the critic ratings and 
 #2. the audience ratings.
@@ -73,6 +77,16 @@ Let's try to plot critic rating (predictor, on the x-axis) vs. audience rating (
 
 #make sure to rename the x- and y-axes appropriately
 
+str(ratings)
+
+library(ggplot2)
+ggplot(ratings, 
+       aes(x = tomatometer_rating,
+           y = audience_rating)) + 
+  geom_point() +
+  xlab("critic rating") + 
+  ylab("audience rating")
+
 ```
 
 Before we do anything else, first notice the warning! 3 of our points couldn't be plotted. Normally this happens when there is missing data or the points are outside the range of the plot. In this case its the former:
@@ -81,19 +95,32 @@ Before we do anything else, first notice the warning! 3 of our points couldn't b
 #use the complete.cases function to find the rows with missing data
 # for help, use ?complete.cases
 
+idx = complete.cases(ratings)
+
 #How many incomplete cases are there? Which movies are they?
+ratings[!idx, ]
+
+#3 Movies with missing data
+
 
 ```
 
 
 ```{r}
 #create another df which only contains the complete cases
-
+ratings_comp = ratings[idx, ]
 ```
 
 Let's go back to our plot. What kind of pattern is there?
 ```{r}
 #make scatterplot and describe the relationship between critic and audience scores. 
+
+ggplot(ratings_comp, 
+       aes(x = tomatometer_rating,
+           y = audience_rating)) + 
+  geom_point() + 
+  xlab("critic rating") + 
+  ylab("audience rating")
 
 #Answer the following questions:
 #1. Is the relationship  between critic scores and audience scores positive or negative?
@@ -151,13 +178,14 @@ How does this line up with the Rotten Tomatoes plot?
 ```{r}
 
 #fit linear model using the lm function
+lmobj = lm(audience_rating ~ tomatometer_rating, data = ratings_comp)
 
 ```
 
 
 ```{r}
 #call the summary of the lm object
-
+summary(lmobj)
 
 ```
 
@@ -167,14 +195,14 @@ How does this line up with the Rotten Tomatoes plot?
 
 
 ```{r}
-#Add red lines for the residuals onto the existing scatterplot
+#Add red lines for the residuals onto the existing scatterplot.
 
 ```
 
 
-If $a, b$ are unknown, how do we estimate them? We're looking for the best choices of their estimators: $\hat{a}, \hat{b}$. Then we could predict the responses as $\hat{y} = \hat{a}_0 + \hat{b}_1 x$. But which values of $\hat{a}_0, \hat{b}_1$ are best?
+If $a, b$ are unknown, how do we estimate them? We're looking for the best choices of their estimators: $\hat{a}, \hat{b}$. Then we could predict the responses as $\hat{y} = \hat{a} + \hat{b} x$. But which values of $\hat{a}, \hat{b}$ are best?
 
-Intuitively we want to pick the line that is closest to the datapoints as possible... let's recall how we defined the residual to solidify this idea.
+Intuitively we want to pick the line that is closest to the data points as possible... let's recall how we defined the residual to solidify this idea.
 
 ##### Def: 
 The **residual** is the difference between the observed response and the predicted response under the model.
@@ -194,7 +222,6 @@ $$SSE = Q(a,b) = \sum_{i=1}^n (y_i - ax - b)^2$$
 The choices of $a$ and $b$ that we want are the ones that minimize this quantity. We will call these minimizers $\hat{a}$ and $\hat{b}$ since they are estimating the true $a$ and $b$.
 
 For now we'll just let R solve this problem-- I'll show you a derivation later if you want! 
-
 
 
 ```{r}
