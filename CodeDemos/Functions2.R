@@ -11,6 +11,13 @@ f = function(x){
 #applying the function
 f(10)
 
+f(-25)
+
+
+formals(f)
+body(f)
+environment(f)
+
 
 g = function(x, y){
   x + y
@@ -43,6 +50,22 @@ library(fdapace, quietly = TRUE)
 
 mtcars
 
+row_subsetter = function(a, b){
+  mtcars[a:b, ]
+}
+
+
+row_subsetter(5, 10)
+
+row_subsetter2 = function(df, a, b){
+  df[a:b, ]
+}
+
+
+row_subsetter2(mtcars, 5, 10)
+
+row_subsetter2(Oxboys, 5, 10)
+
 #### LAB #####
 
 #define a function which takes rows a thru b of mtcars
@@ -51,6 +74,20 @@ mtcars
 #1. define a function which takes rows a thru b of mtcars
 #2. define a function which takes rows a thru b of a general data frame `df`
 
+
+
+square_df = function(vec){
+  #do the stuff
+  sqvec = vec^2
+  df = data.frame(vec, sqvec)
+  output = df[1:10, ]
+  
+  #return the output
+  return(output)
+}
+
+
+square_df(1:20)
 
 
 
