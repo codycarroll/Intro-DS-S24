@@ -246,6 +246,8 @@ myFunc_11 <- function(a, b) {
 myFunc_11()
 
 
+###START HERE THURS 4/18
+
 ##Default arguments in a function
 
 function.default = function(a = 1, b = 2){
