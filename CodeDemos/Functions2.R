@@ -246,7 +246,7 @@ myFunc_11 <- function(a, b) {
 myFunc_11()
 
 
-###START HERE THURS 4/18
+
 
 ##Default arguments in a function
 
@@ -264,13 +264,13 @@ function.default(1, 5) #a = 1, b = 5
 function.default(b = 3) #a = 1, b = 3
 
 ##writing arguments in terms of other arguments
-
 function.default2 = function(a = 1, b = 5*a){
   b/a
 }
 
 function.default2(10)
 function.default2(100) #always gives 5 if b is not changed
+
 
 function.default2(10, 20)
 
@@ -285,12 +285,32 @@ function.missing1(2) #throws an error (argument "arg2" is missing)
 #2)
 function.missing2 = function(arg1, arg2){
   print(c(missing(arg1), missing(arg2)))
+  
+  arg1 + arg2 
 }
 
 function.missing2(2) #key thing is that the "missing" statement
-#will still be run. So, you can use this to ensure that your function will run
+#will still be run. So, you can use this to ensure that 
+# your function will run
 
 
+#defensive programming:
+
+function.missing3 = function(arg1, arg2){
+  vec = c(missing(arg1), missing(arg2))
+
+  if(all(!vec)){ #makes sure both arguments are NOT missing
+    arg1 + arg2 
+  }else{
+    print("At least one of the arguments is missing!")
+  }
+
+}
+
+
+function.missing3(arg1 = 2, arg2 = 3)
+
+function.missing3(arg1 = 2)
 
 ##argument calls are local!
 
@@ -298,6 +318,10 @@ function.5 = function(a = ls()){
   z = 10
   a
 }
+
+function.5()
+
+function.5(ls())
 
 ls()
 
@@ -309,8 +333,6 @@ function.5 = function(a = ls()){
 }
 
 function.5()
-
-
 
 function.5() #will call all variables inside the function
 function.5(a = ls()) #will store all variables in your environment first
