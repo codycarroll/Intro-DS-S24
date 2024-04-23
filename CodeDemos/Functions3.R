@@ -50,28 +50,6 @@ func1(99) #in essence will pass 99 through 4 functions and
 
 ##Using try() function
 
-rm(list=ls())
-myFunc_25 <- function(z){
-  print(log(z))
-  print("Made it here")
-}
-
-myFunc_25(10)
-
-myFunc_25("abc")
-
-
-myFunc_25 <- function(z){
-  try(log(z))
-  print("Made it here")
-}
-
-myFunc_25(10)
-
-myFunc_25("abc")
-
-#start here tuesday!
-
 func5 = function(x, y){
   try(log(x + y)) #we know that log() does not work for negative values
   temp = x + y
