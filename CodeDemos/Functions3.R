@@ -111,10 +111,12 @@ show_condition <- function(code) {
 
 show_condition(stop("!"))
 
+#start here 4/23
+
 
 #Using the stop() or warning() functions for defensive programming
 
-##Example - concocted by Hai: creating a vector of strings where two strings match
+##Example: creating a vector of strings where two strings match
 
 string_match = function(string1, string2){
   #Input: string1 and string2 are vectors of strings of the same length
