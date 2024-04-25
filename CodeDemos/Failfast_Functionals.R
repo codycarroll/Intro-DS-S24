@@ -3,7 +3,7 @@ library(tidyverse)
 library(magrittr)
 
 #Fail Fast principles
-myVec <- c("a", "bcd", "efgh")
+myVec <- c("aaa", "bcd", "efg")
 if(length(unique(nchar(myVec))) != 1) {
   stop("Error: Elements of your input vector do not have the
   same length!")
@@ -34,6 +34,9 @@ myDataFrame_01 = data.frame(A = c(1,10,7,2,1,6),
 
 #goal: replace all -99s with NA
 
+myDataFrame_01
+
+
 #why is this bad?
 runbadex = FALSE
 if(runbadex == TRUE){
@@ -48,7 +51,6 @@ if(runbadex == TRUE){
 #will this work?
 fix99s_byCol <- function(myCol) {
   myCol[myCol == -99] <- NA
-  
 }
 #how to fix it?
 
@@ -61,6 +63,11 @@ fix99s_byCol <- function(myCol) {
 
 #how to apply to each col?
 
+for(i in 1:ncol(myDataFrame_01)){
+  myDataFrame_01[,i] = fix99s_byCol(myDataFrame_01[,i])
+}
+
+myDataFrame_01
 
 
 
@@ -71,9 +78,17 @@ fix99s_byCol <- function(myCol) {
 #
 #functionals avoid loops
 #is this what we want?
+
+myDataFrame_01 = data.frame(A = c(1,10,7,2,1,6),
+                            B = c(6,4,9,9,10,2),
+                            C = c(1,4,5,3,5,1),
+                            D = c(5,-99,4,8,9,3),
+                            E = c(-99,9,1,6,8,8),
+                            F = c(1,3,4,8,6,5))
+
 output = lapply(myDataFrame_01, fix99s_byCol) 
 
-output
+str(output)
 
 
 #to df 
@@ -107,15 +122,43 @@ fixMissing <- function(myCol, myValue) {
 
 myValue = c(-99,-999,-8888888)
 
+#first check: does it work on 1col w 1 value at a time?
+fixMissing(myCol = myDataFrame_02$A, myValue = -999)
+
+#second check: does it work on 1col w many replacement values at a time? 
+fixMissing(myCol = myDataFrame_02$C, myValue = myValue)
+#not yet... let's try to do this later down the line!
+
+
+
+
+
 x = -998
 
 x %in% myValue
 
+missingval_key = c(-99,-999,-8888888)
+
+myDataFrame_02 = data.frame(A = c(1,10,-999,2,1,6),
+                            B = c(6,4,9,9,10,2),
+                            C = c(1,4,5,-8888888,5,1),
+                            D = c(5,-99,4,8,9,3),
+                            E = c(-99,9,1,6,8,8),
+                            F = c(1,3,4,8,6,5))
+
+missingval_key = c(-999,-999,-8888888,-99,-99,-99)
 
 mapply(myDataFrame_02, 
        FUN = fixMissing, 
        myValue = missingval_key) %>% 
   as.data.frame()
+
+?mapply
+
+#example of mapply
+
+mapply(rep, c(1,2,3,4), c(4,3,2,1))
+
 
 
 myDataFrame_02 = data.frame(A = c(1,10,-999,2,1,6),
@@ -152,7 +195,7 @@ lapply(myDataFrame_02, FUN = fixMissing2, myValue = myValue) %>%
 #sometimes you only need to use a function once and it's really simple.
 #in that case anonymous functions can be useful.
 
-
+myDataFrame_01
 
 #########################
 #anonymous
@@ -192,7 +235,33 @@ quantile(x, probs = 0.75) - quantile(x, probs = 0.25) #IQR = Q3 - Q1
 IQR(x) #or this
 
 
-apply(iris[,1:4], 2, mean)
+getstats = function(mycol){
+  if(!is.numeric(mycol)){
+    stop("The column needs to be numeric!")
+  }
+  
+  #handle missing data
+  mycol = mycol[!is.na(mycol)]
+  
+  #compute stats & output
+  output = c(mean = mean(mycol), 
+             med = median(mycol), 
+             sd = sd(mycol),
+             var = var(mycol),
+             q1 = quantile(mycol, probs = 0.25),
+             q3 = quantile(mycol, probs = 0.75),
+             iqr = IQR(mycol))
+  return(output)
+}
+
+library(palmerpenguins)
+penguins
+
+getstats(penguins$body_mass_g)
+
+penguins %>% head
+
+lapply(penguins[,3:6], getstats) %>% as.data.frame()
 
 
 
@@ -200,20 +269,34 @@ apply(iris[,1:4], 2, mean)
 library(palmerpenguins)
 penguins
 
+#start here 4/25
 
-x = 1:5
-y = 5:1
+#ex functional
+myFunctional_01 <- function(myFuncArg) myFuncArg(runif(1000), na.rm = TRUE)
 
-cor(x,y)
+#the function generates 1000 random numbers between 0 and 1 
+#and then applies the function you provide as `myFuncArg`
 
+myFunctional_01(mean)
+myFunctional_01(min)
+myFunctional_01(sd)
+                                                 
+
+#introduce state data
 ?state.x77
+state.region
+
+state.x77 = state.x77 %>% as.data.frame()
 
 colnames(state.x77)
+
+
+#review the idea of correlation
 library(ggplot2)
 
 df = as.data.frame(state.x77)
 ggplot(df, aes(x = Income,
-                      y = Illiteracy)) + 
+               y = Illiteracy)) + 
   geom_point()
 
 cor(df$Income, df$Illiteracy)
@@ -224,6 +307,27 @@ ggplot(df, aes(x = Income,
   geom_point()
 
 cor(df$Income, df$Population)
+
+
+ggplot(df, aes(x = Population,
+               y = Population)) + 
+  geom_point()
+
+cor(df$Population, df$Population)
+
+?cor
+
+####LAB 
+lapply_res = lapply(state.x77, FUN = cor, y = state.x77$Population)
+
+str(lapply_res)
+
+sapply_res = sapply(state.x77, FUN = cor, y = state.x77$Population)
+
+str(sapply_res)
+
+tapply_res = tapply(state.x77$Area, state.region, sum)
+tapply_res
 
 ####Benchmarking
 library(microbenchmark)

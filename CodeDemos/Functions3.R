@@ -132,11 +132,12 @@ string_match = function(string1, string2){
     stop("string1 and string2 must be of the same length!")
   }
   
-  logical_same = string1 == string2
+  logical_same = (string1 == string2)
   same_string = string1[logical_same]
   return(same_string)
 }
 
+#inputs
 string_1 = c("I", "like", "cats")
 string_2 = c("I", "like", "birds")
   
@@ -144,9 +145,24 @@ string_same = string_match(string_1, string_2)
 string_same
 
 string_3 = c("I", "like", "cats", "!!!!!!")
-string_4 = c("I", "like", "birds")
+string_4 = c("I", "like", "birds", "!!!!!!")
 
 string_same = string_match(string_3, string_4)
 string_same
+
+
+string_5 = c("I", "like", "turtles")
+string_6 = c(6,3,8)
+
+
+string_match(string_5, string_6)
+
+
+string_7 = c("I", "like", "cats")
+string_8 = c("I", "like", "cats", "!!!!")
+
+
+string_match(string_7, string_8)
+
 
 
