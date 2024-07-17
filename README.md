@@ -114,7 +114,7 @@ Overall, this course will be split into two main parts:
 | Practice Case Study ||Thursday, 2/15|
 | CS 1:  |Class Survey Data|Tuesday, 2/20|
 |CS 2:   |Penguins|Tuesday, 4/2|
-|CS 3: ||Tuesday, 4/30|
+|CS 3: |Sabermetrics|Tuesday, 4/30|
 
 ### Final Project
 Final Presentation Dates: May 2nd, 7th, 9th.
