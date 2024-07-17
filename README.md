@@ -143,7 +143,7 @@ Final Presentation Dates: May 2nd, 7th, 9th.
 
 
 ### Data Science News
-* [Data Science Beginnings](https://open.spotify.com/show/5SY1TPw3FubdSxCqrxUKZv?si=a1eb2a858e384db3) A podcast hosted by me and Robert Clements, another prof in the MSDS program.
+* [USF Data Science Podcast](https://open.spotify.com/show/5SY1TPw3FubdSxCqrxUKZv?si=a1eb2a858e384db3) A podcast hosted by me and Robert Clements, another prof in the MSDS program.
 * [R Weekly](https://rweekly.org/). About R.
 * [R-bloggers](https://www.r-bloggers.com/). About R.
 * [Data Tau](https://www.datatau.com/). About the DS industry.
